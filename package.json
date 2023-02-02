@@ -1,0 +1,39 @@
+{
+  "name": "renderer",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "cross-env NODE_ENV=development nodemon -x \"clear && node\" server.js",
+    "build": "next build renderer",
+    "export": "next build renderer && next export renderer",
+    "start": "next start",
+    "lint": "next lint"
+  },
+  "dependencies": {
+    "@apollo/client": "^3.7.4",
+    "@types/node": "18.11.9",
+    "@types/react": "18.0.25",
+    "@types/react-dom": "18.0.8",
+    "antd": "^4.24.2",
+    "apollo-server-express": "^3.11.1",
+    "cors": "^2.8.5",
+    "eslint": "8.27.0",
+    "eslint-config-next": "13.0.3",
+    "express": "^4.18.2",
+    "graphql": "^16.6.0",
+    "graphql-compose": "^9.0.10",
+    "graphql-compose-mongoose": "^9.7.2",
+    "graphql-request": "^5.0.0",
+    "mongoose": "^6.9.0",
+    "next": "13.0.3",
+    "react": "18.2.0",
+    "react-dom": "18.2.0",
+    "react-to-print": "^2.14.11",
+    "typescript": "4.8.4",
+    "vorpal": "^1.12.0"
+  },
+  "devDependencies": {
+    "cross-env": "^7.0.3",
+    "nodemon": "^2.0.20"
+  }
+}
