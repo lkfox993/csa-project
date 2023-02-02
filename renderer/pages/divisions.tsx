@@ -97,9 +97,10 @@ export default function DivisionsPage() {
                     <List.Item>
                         <Card title={category.name}>
 
-                            {Object.keys(weights).map((weight: any) => {
+                            {Object.keys(weights).map((weight: any, i: number) => {
                                 return (
                                     <List
+                                        key={i}
                                         bordered
                                         header={`${weight} kg`}
                                         dataSource={weights[weight]}

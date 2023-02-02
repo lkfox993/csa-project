@@ -230,11 +230,11 @@ const Home: NextPage & any = () => {
                       >
                         <Select placeholder="Weight" size={'large'} style={{ width: 230 }}>
 
-                          {data?.categoryPagination?.items?.map((category: any) => {
+                          {data?.categoryPagination?.items?.map((category: any, i: number) => {
                             return (
-                              <OptGroup label="Manager">
+                              <OptGroup label="Manager" key={i}>
                                 {category?.weights.map((weight: number) => {
-                                  return <Option value={`${category._id}/${weight}`}>{weight} kg</Option>
+                                  return <Option key={weight} value={`${category._id}/${weight}`}>{weight} kg</Option>
                                 })}
                               </OptGroup>
                             )

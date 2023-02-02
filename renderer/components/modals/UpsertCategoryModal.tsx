@@ -42,7 +42,7 @@ function UpsertCategoryModal(props: IProps) {
 
     React.useEffect(() => {
         form.resetFields();
-    }, [props.visible]);
+    }, [props.visible, form]);
 
     const onFinish = (record: any) => {
 
@@ -110,7 +110,7 @@ function UpsertCategoryModal(props: IProps) {
                     <Select mode={'multiple'} size={'large'}>
 
                         {Array.from({ length: 140 }, (_, i) => i + 1).map((weight)=>{
-                            return <Option value={weight}>{weight}kg</Option>
+                            return <Option key={weight} value={weight}>{weight}kg</Option>
                         })}
 
                     </Select>

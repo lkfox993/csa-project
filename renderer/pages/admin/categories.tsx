@@ -116,7 +116,7 @@ function CategoriesPage(props: any) {
                     }
                     subTitle={"On this page you can manage categories"}
                     extra={[
-                        <Badge count={selectedRowKeys.length} overflowCount={9}>
+                        <Badge count={selectedRowKeys.length} overflowCount={9} key={'badge-delete'}>
                             <Popconfirm
                                 title="Are you sure？"
                                 onConfirm={() => {

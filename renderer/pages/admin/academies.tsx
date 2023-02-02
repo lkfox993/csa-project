@@ -7,24 +7,12 @@ import {
   Space,
   Popconfirm,
   Badge,
-  Button,
   PageHeader,
-  Typography
 } from "antd";
 
 import {
-  EditOutlined,
   DeleteOutlined,
-  ClearOutlined,
-  PlusOutlined,
 } from "@ant-design/icons";
-
-var dataSource = Array.from({ length: 20 }).fill({
-  name: 'csa',
-  trainer: 'Alexandr Demidov',
-  email: 'csa@gmail.com',
-  phone: '37379555864'
-});
 
 const ACADEMY_PAGINATION = gql`
 
@@ -63,9 +51,9 @@ const ACADEMY_REMOVE_BY_ID = gql`
     }
 `;
 
-function AcademiesPage(props: any) {
+function AcademiesPage() {
 
-  const { data, loading, error } = useQuery(ACADEMY_PAGINATION);
+  const { data, loading } = useQuery(ACADEMY_PAGINATION);
   const [selectedRowKeys, setSelectedRowKeys] = React.useState<React.Key[]>([]);
   const [academyRemoveById] = useMutation(ACADEMY_REMOVE_BY_ID, {
     refetchQueries: ['AcademyPagination']
@@ -175,12 +163,11 @@ function AcademiesPage(props: any) {
           }
           subTitle={"On this page you can manage academies"}
           extra={[
-            <Badge count={selectedRowKeys.length} overflowCount={9}>
+            <Badge count={selectedRowKeys.length} overflowCount={9} key={'badge-delete'}>
               <Popconfirm
+                key={'delete'}
                 title="Are you sure？"
-                onConfirm={() => {
-                  const length = selectedRowKeys.length;
-                }}
+                onConfirm={() => {}}
                 okText="Yes"
                 cancelText="No"
               >
