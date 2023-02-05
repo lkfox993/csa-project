@@ -1,5 +1,6 @@
 import * as React from 'react';
 import Router from 'next/router';
+import Link from 'next/link';
 import Image from 'next/image';
 import type { NextPage } from 'next'
 import Head from 'next/head';
@@ -10,6 +11,34 @@ import { MinusCircleOutlined, PlusOutlined } from '@ant-design/icons'
 
 const { useForm } = Form; 
 const { Option, OptGroup } = Select;
+
+const DIVISION_PAGINATION = gql`
+
+  query {
+    academyPagination(page: 1, perPage: 20, filter: {}, sort: _ID_ASC) {
+      count
+      items {
+        name
+        trainer
+        email
+        phone
+        participants {
+          name
+          weight
+        }
+        _id
+      }
+      pageInfo {
+        currentPage
+        perPage
+        pageCount
+        itemCount
+        hasNextPage
+        hasPreviousPage
+      }
+    }
+  }
+`
 
 const CATEGORY_PAGINATION = gql`
 
@@ -54,6 +83,7 @@ const Home: NextPage & any = () => {
   const [form] = Form.useForm();
   const [success, setSuccess] = React.useState(false);
   const [loading, setLoading] = React.useState(false);
+  const academyPaginationResult = useQuery(DIVISION_PAGINATION);
   const [academyCreateOne] = useMutation(ACADEMY_CREATE_ONE);
   const { data, error } = useQuery(CATEGORY_PAGINATION);
 
@@ -103,6 +133,8 @@ const Home: NextPage & any = () => {
     setCurrent(current - 1);
   };
 
+  const count = academyPaginationResult?.data?.academyPagination?.pageInfo?.itemCount;
+
   return (
     <div>
 
@@ -123,19 +155,14 @@ const Home: NextPage & any = () => {
           left: 0
         }}>
 
-        <div
-          className={'logo'}
-          style={{ textAlign: 'center' }}>
-          <Image src={'/csa.png'} width={250} height={220} alt={'health'} />
-        </div>
-
-        <p
-          
-          style={{ textAlign: 'center' }}>
-          fef
-        </p>
+        <Link href={'/divisions'} style={{ textAlign: 'center', display: 'block', fontSize: 20 }}>
+          {`Athlete List By Division : ${count}`}
+        </Link>
 
         <Form
+          style={{
+            margin: '20px auto'
+          }}
           form={form}
           layout={'vertical'}
           initialValues={{ remember: true }}
@@ -232,9 +259,9 @@ const Home: NextPage & any = () => {
 
                           {data?.categoryPagination?.items?.map((category: any, i: number) => {
                             return (
-                              <OptGroup label="Manager" key={i}>
+                              <OptGroup label={category?.name} key={i}>
                                 {category?.weights.map((weight: number) => {
-                                  return <Option key={weight} value={`${category._id}/${weight}`}>{weight} kg</Option>
+                                  return <Option key={`${category._id}/${weight}`} value={`${category._id}/${weight}`}>{weight} kg</Option>
                                 })}
                               </OptGroup>
                             )

@@ -107,7 +107,7 @@ function UpsertCategoryModal(props: IProps) {
                         },
                     ]}
                 >
-                    <Select mode={'multiple'} size={'large'}>
+                    <Select mode="tags" size={'large'}>
 
                         {Array.from({ length: 140 }, (_, i) => i + 1).map((weight)=>{
                             return <Option key={weight} value={weight}>{weight}kg</Option>

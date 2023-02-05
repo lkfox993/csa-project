@@ -35,6 +35,6 @@ app.prepare().then(async () => {
 
   server.use(handle);
 
-  server.listen(process.env.PORT || 3000);
+  server.listen(process.env.PORT || 8000);
   
 })

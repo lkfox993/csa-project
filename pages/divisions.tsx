@@ -51,8 +51,11 @@ export default function DivisionsPage() {
 
     const { data, loading, error } = useQuery(DIVISION_PAGINATION);
 
+    const count = data?.academyPagination?.pageInfo?.itemCount;
+
     return (
         <List
+            header={count && `Athlete List By Division : ${count}`}
             loading={loading}
             grid={{
                 gutter: 16,
@@ -70,27 +73,23 @@ export default function DivisionsPage() {
 
                 const weights = academies.reduce((accumulator: any, academy: any) => {
 
-                    const items = academy.participants.filter((participant: any) => {
+                    academy.participants.forEach((participant: any) => {
 
-                        const [_id] = participant?.weight.split('/');
-                        return _id == category._id;
-                    
-                    }).reduce((accumulator: any, participant: any) => {
+                        const [_id, weight] = participant?.weight.split('/');
 
-                        const weight = participant.weight?.split('/')[1];
+                        if (_id == category._id) {
 
-                        if (accumulator[weight]) {
-                            accumulator[weight].push(participant);
-                        } else {
-                            accumulator[weight] = [participant];
+                            if (accumulator[weight]) {
+                                accumulator[weight].push(participant);
+                            } else {
+                                accumulator[weight] = [participant];
+                            }
                         }
 
-                        return accumulator
-                    }, {});
-
-                    accumulator = { ...accumulator, ...items };
+                    });
 
                     return accumulator;
+
                 }, {})
 
                 return (
@@ -104,7 +103,7 @@ export default function DivisionsPage() {
                                         bordered
                                         header={`${weight} kg`}
                                         dataSource={weights[weight]}
-                                        renderItem={(participant: any,i: number) => (
+                                        renderItem={(participant: any, i: number) => (
                                             <List.Item>
                                                 {i + 1}. <Typography.Text mark>{participant.name}</Typography.Text>
                                             </List.Item>
