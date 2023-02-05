@@ -4,8 +4,8 @@
   "private": true,
   "scripts": {
     "dev": "cross-env NODE_ENV=development nodemon -x \"clear && node\" server.js",
-    "build": "next build renderer",
-    "export": "next build renderer && next export renderer",
+    "build": "next build",
+    "export": "next export",
     "start": "cross-env NODE_ENV=production node server.js",
     "lint": "next lint"
   },

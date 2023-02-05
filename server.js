@@ -11,7 +11,7 @@ const { schemaComposer } = require('graphql-compose');
 const { ApolloServer } = require('apollo-server-express');
 const { connectDatabase } = require('./db');
 
-const app = next({ dev: __DEV__, dir: 'renderer' });
+const app = next({ dev: __DEV__ });
 const handle = app.getRequestHandler();
 
 app.prepare().then(async () => {
