@@ -9,7 +9,7 @@ const CategorySchema = Schema({
     },
 
     weights: {
-      type: [Number],
+      type: [String],
       required: true
     }
 
