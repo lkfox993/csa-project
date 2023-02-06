@@ -133,7 +133,12 @@ const Home: NextPage & any = () => {
     setCurrent(current - 1);
   };
 
-  const count = academyPaginationResult?.data?.academyPagination?.pageInfo?.itemCount;
+  const count = academyPaginationResult?.data?.academyPagination?.items?.reduce((t: any, academy: any) =>{
+    
+    t += academy.participants.length;
+    return t;
+    
+  },0);
 
   return (
     <div>
