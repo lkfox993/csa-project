@@ -53,6 +53,9 @@ const PrintWrapper = React.forwardRef((props: any, ref: any) => {
       <div ref={ref}>{props.children}</div>
     );
 });
+
+PrintWrapper.displayName = 'PrintWrapper'
+
 export default function DivisionsPage() {
 
     var printRef = React.useRef();
@@ -68,6 +71,7 @@ export default function DivisionsPage() {
     return (
         
             <PrintWrapper ref={printRef}>
+
             <List
                 
                 header={(
