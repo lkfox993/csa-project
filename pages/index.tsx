@@ -137,7 +137,7 @@ const Home: NextPage & any = () => {
     
     t += academy.participants.length;
     return t;
-    
+
   },0);
 
   return (
@@ -190,7 +190,7 @@ const Home: NextPage & any = () => {
             >
               <Input
                 size={'large'}
-                placeholder={'Example: CSA'} />
+                />
             </Form.Item>
 
             <Form.Item
@@ -204,8 +204,7 @@ const Home: NextPage & any = () => {
               }]}
             >
               <Input
-                size={'large'}
-                placeholder={'Example: Alexandr Demidov'} />
+                size={'large'}/>
             </Form.Item>
 
             <Form.Item
@@ -220,7 +219,7 @@ const Home: NextPage & any = () => {
             >
               <Input
                 size={'large'}
-                placeholder={'Example: ademidov@gmail.com'} />
+                 />
             </Form.Item>
 
             <Form.Item
@@ -235,7 +234,7 @@ const Home: NextPage & any = () => {
             >
               <Input
                 size={'large'}
-                placeholder={'Example: 37379665234'} />
+                 />
             </Form.Item>
 
           </div>
