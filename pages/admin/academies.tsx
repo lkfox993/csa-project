@@ -1,6 +1,11 @@
 import React from "react";
+import dynamic from 'next/dynamic';
 import Layout from "../../components/static/Layout";
 import { gql, useQuery, useMutation } from '@apollo/client';
+
+const UpsertAcademyModal = dynamic(() => import('../../components/modals/UpsertAcademyModal'), {
+  ssr: false
+})
 
 import {
   Table,
@@ -8,9 +13,11 @@ import {
   Popconfirm,
   Badge,
   PageHeader,
+  Button
 } from "antd";
 
 import {
+  PlusOutlined,
   DeleteOutlined,
 } from "@ant-design/icons";
 
@@ -53,6 +60,7 @@ const ACADEMY_REMOVE_BY_ID = gql`
 
 function AcademiesPage() {
 
+  const [visible, setVisible] = React.useState(false);
   const { data, loading } = useQuery(ACADEMY_PAGINATION);
   const [selectedRowKeys, setSelectedRowKeys] = React.useState<React.Key[]>([]);
   const [academyRemoveById] = useMutation(ACADEMY_REMOVE_BY_ID, {
@@ -89,14 +97,14 @@ function AcademiesPage() {
       title: "Action",
       key: "action",
       render: (record: any) => (
-        <Space size={[25, 16]}> 
+        <Space size={[25, 16]}>
 
           <Popconfirm
             title="Are you sure？"
             onConfirm={() => {
               academyRemoveById({
                 variables: {
-                    _id: record._id
+                  _id: record._id
                 }
               })
             }}
@@ -113,23 +121,23 @@ function AcademiesPage() {
 
   const expandedRowRender = ({ participants }: any) => {
 
-    if(!participants){
+    if (!participants) {
       return false
     }
 
     const columns = [
 
-      { 
-        title: 'Name', 
-        dataIndex: 'name', 
-        key: 'name' 
+      {
+        title: 'Name',
+        dataIndex: 'name',
+        key: 'name'
       },
 
-      { 
-        title: 'Weight', 
-        dataIndex: 'weight', 
-        key: 'weight', 
-        render(record: any){
+      {
+        title: 'Weight',
+        dataIndex: 'weight',
+        key: 'weight',
+        render(record: any) {
 
           const [_, weight] = record.split('/');
           return `${weight} kg`;
@@ -138,9 +146,9 @@ function AcademiesPage() {
     ];
 
     return (
-      <Table 
-        columns={columns} 
-        dataSource={participants} 
+      <Table
+        columns={columns}
+        dataSource={participants}
         pagination={false} />
     )
   }
@@ -148,7 +156,9 @@ function AcademiesPage() {
 
   return (
     <React.Fragment>
-
+      <UpsertAcademyModal visible={visible} setVisible={() => {
+        setVisible(!visible);
+      }} />
       <Layout>
         <PageHeader
           ghost={false}
@@ -163,18 +173,28 @@ function AcademiesPage() {
           }
           subTitle={"On this page you can manage academies"}
           extra={[
+
             <Badge count={selectedRowKeys.length} overflowCount={9} key={'badge-delete'}>
               <Popconfirm
                 key={'delete'}
                 title="Are you sure？"
-                onConfirm={() => {}}
+                onConfirm={() => { }}
                 okText="Yes"
                 cancelText="No"
               >
-                
+
               </Popconfirm>
             </Badge>,
-            
+
+            <Button
+              key="3"
+              type={"primary"}
+              icon={<PlusOutlined />}
+              onClick={() => {
+                setVisible(true)
+              }}
+            ></Button>
+
           ]}
         />
 
@@ -184,7 +204,7 @@ function AcademiesPage() {
           pagination={{
             pageSize: 15,
           }}
-          dataSource={data?.academyPagination?.items} 
+          dataSource={data?.academyPagination?.items}
           columns={columns}
           loading={loading}
         />

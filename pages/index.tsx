@@ -8,7 +8,6 @@ import { gql, useQuery, useMutation } from '@apollo/client';
 import { Form, Input, Button, DatePicker, Steps, Space, Select, Result, message } from 'antd';
 import { MinusCircleOutlined, PlusOutlined } from '@ant-design/icons'
 
-
 const { useForm } = Form; 
 const { Option, OptGroup } = Select;
 
@@ -251,7 +250,15 @@ const Home: NextPage & any = () => {
                         name={[name, 'name']}
                         rules={[{ required: true, message: 'Missing full name' }]}
                       >
-                        <Input placeholder="Full Name" size={'large'} style={{ width: 230 }} />
+                        <Input placeholder="Full Name" size={'large'} />
+                      </Form.Item>
+
+                      <Form.Item
+                        {...restField}
+                        name={[name, 'age']}
+                        rules={[{ required: true, message: 'Missing age' }]}
+                      >
+                        <DatePicker placeholder="Age" size={'large'}  />
                       </Form.Item>
 
                       <Form.Item
@@ -259,7 +266,7 @@ const Home: NextPage & any = () => {
                         name={[name, 'weight']}
                         rules={[{ required: true, message: 'Missing category weight' }]}
                       >
-                        <Select placeholder="Weight" size={'large'} style={{ width: 230 }}>
+                        <Select placeholder="Weight" size={'large'} >
 
                           {data?.categoryPagination?.items?.map((category: any, i: number) => {
                             return (

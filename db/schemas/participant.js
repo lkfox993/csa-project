@@ -8,6 +8,11 @@ const ParticipantSchema = Schema({
     required: true,
   },
 
+  age: {
+    type: String,
+    required: true
+  },
+
   weight: {
     type: String,
     required: true
@@ -15,7 +20,7 @@ const ParticipantSchema = Schema({
 
 },
   {
-    collection: "categories",
+    collection: "participants",
     timestamps: false,
   }
 );
