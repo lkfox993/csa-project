@@ -12,18 +12,21 @@ import {
 } from "antd";
 import { useMutation, useQuery, gql } from '@apollo/client';
 import { MinusCircleOutlined, PlusOutlined } from '@ant-design/icons'
-import moment from 'moment';
 
 const { OptGroup } = Select;
 const { TabPane } = Tabs;
 
-const Academy_CREATE_ONE = gql`
+const ACADEMY_CREATE_ONE = gql`
 
-  mutation AdCreateOne($record: CreateOneAcademyInput!) {
-    AcademyCreateOne(record: $record) {
+  mutation AcademyCreateOne($record: CreateOneAcademyInput!) {
+    academyCreateOne(record: $record) {
       recordId
       record {
         name
+        participants {
+          name
+          weight
+        }
         _id
       }
       
@@ -84,7 +87,7 @@ function UpsertAcademyModal(props: IProps) {
 
   const [form] = Form.useForm();
 
-  const [AcademyCreateOne] = useMutation(Academy_CREATE_ONE, {
+  const [academyCreateOne] = useMutation(ACADEMY_CREATE_ONE, {
     refetchQueries: ['AcademyPagination'],
   });
 
@@ -108,7 +111,7 @@ function UpsertAcademyModal(props: IProps) {
 
     if (props.actionType == "CREATE_ACADEMY") {
 
-      AcademyCreateOne({ variables: { record } })
+      academyCreateOne({ variables: { record } })
         .then(() => {
           props.setVisible(false);
           form.resetFields();
@@ -161,7 +164,7 @@ function UpsertAcademyModal(props: IProps) {
           <TabPane tab={'General'} tabKey={'general'} key={'general'}>
 
             <Form.Item
-              label="Name"
+              label="Academy"
               hasFeedback
               name="name"
               rules={[
@@ -173,6 +176,50 @@ function UpsertAcademyModal(props: IProps) {
               ]}
             >
               <Input placeholder={"Your name"} size={'large'} />
+            </Form.Item>
+
+            <Form.Item
+              label="Trainer"
+              name="trainer"
+              hasFeedback
+              rules={[{
+                required: true,
+                message: 'Please input your trainer!',
+                type: 'string'
+              }]}
+            >
+              <Input
+                size={'large'}/>
+            </Form.Item>
+
+            <Form.Item
+              label="Email"
+              name="email"
+              hasFeedback
+              rules={[{
+                required: true,
+                message: 'Please input your email!',
+                type: 'email'
+              }]}
+            >
+              <Input
+                size={'large'}
+                 />
+            </Form.Item>
+
+            <Form.Item
+              label="Phone"
+              name="phone"
+              hasFeedback
+              rules={[{
+                required: true,
+                message: 'Please input your phone!',
+                type: 'string'
+              }]}
+            >
+              <Input
+                size={'large'}
+                 />
             </Form.Item>
 
           </TabPane>

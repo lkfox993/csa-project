@@ -40,7 +40,7 @@ const AcademySchema = Schema({
 
         age: {
           type: String,
-          required: true,
+          required: false,
           default: 'unknown'
         },
 
