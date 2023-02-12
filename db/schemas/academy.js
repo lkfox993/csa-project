@@ -1,8 +1,6 @@
 const { Schema, model, Types } = require("mongoose");
 const { composeWithMongoose } = require("graphql-compose-mongoose");
 
-const { ParticipantSchema } = require('./participant');
-
 const AcademySchema = Schema({
 
   /**
@@ -30,7 +28,30 @@ const AcademySchema = Schema({
   },
 
   participants: {
-    type: [ ParticipantSchema ],
+    type: [
+      {
+
+        _id: false,
+
+        name: {
+          type: String,
+          required: true,
+        },
+
+        age: {
+          type: String,
+          required: true,
+          default: 'unknown'
+        },
+
+        weight: {
+          type: String,
+          required: true
+        }
+
+      }
+
+    ],
     required: false
   }
 

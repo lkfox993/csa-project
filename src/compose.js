@@ -18,6 +18,7 @@ schemaComposer.Mutation.addFields({
 
     academyCreateOne: AcademyTC.getResolver('createOne'),
     academyRemoveById: AcademyTC.getResolver('removeById'),
+    academyUpdateById: AcademyTC.getResolver('updateById'),
 
     categoryCreateOne: CategoryTC.getResolver('createOne'),
     categoryRemoveById: CategoryTC.getResolver('removeById'),

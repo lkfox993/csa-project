@@ -2,6 +2,7 @@ import React from "react";
 import dynamic from 'next/dynamic';
 import Layout from "../../components/static/Layout";
 import { gql, useQuery, useMutation } from '@apollo/client';
+import Moment from 'react-moment';
 
 const UpsertAcademyModal = dynamic(() => import('../../components/modals/UpsertAcademyModal'), {
   ssr: false
@@ -19,6 +20,7 @@ import {
 import {
   PlusOutlined,
   DeleteOutlined,
+  EditOutlined
 } from "@ant-design/icons";
 
 const ACADEMY_PAGINATION = gql`
@@ -33,6 +35,7 @@ const ACADEMY_PAGINATION = gql`
         phone
         participants {
           name
+          age
           weight
         }
         _id
@@ -60,6 +63,8 @@ const ACADEMY_REMOVE_BY_ID = gql`
 
 function AcademiesPage() {
 
+  const [initialValues, setInitialValues] = React.useState<any>({});
+  const [actionType, setActionType] = React.useState('CREATE_CLIENT');
   const [visible, setVisible] = React.useState(false);
   const { data, loading } = useQuery(ACADEMY_PAGINATION);
   const [selectedRowKeys, setSelectedRowKeys] = React.useState<React.Key[]>([]);
@@ -67,6 +72,16 @@ function AcademiesPage() {
     refetchQueries: ['AcademyPagination']
   });
 
+  function dispatchActionType(actionType: any, initialValues = {}) {
+
+    return () => {
+
+      setInitialValues(initialValues);
+      setVisible(true);
+      setActionType(actionType);
+    }
+  };
+  
   const columns = [
 
     {
@@ -98,6 +113,8 @@ function AcademiesPage() {
       key: "action",
       render: (record: any) => (
         <Space size={[25, 16]}>
+
+          <EditOutlined onClick={dispatchActionType("UPDATE_ACADEMY", record)} />
 
           <Popconfirm
             title="Are you sure？"
@@ -134,6 +151,20 @@ function AcademiesPage() {
       },
 
       {
+        title: 'Age',
+        dataIndex: 'age',
+        key: 'age',
+        render(age: any){
+          
+          if(age == 'unknown'){
+            return age;
+          }
+
+          return <Moment format={'D MMM YYYY'}>{age}</Moment>
+        }
+      },
+
+      {
         title: 'Weight',
         dataIndex: 'weight',
         key: 'weight',
@@ -153,12 +184,11 @@ function AcademiesPage() {
     )
   }
 
+  const modalProps = { visible, setVisible, actionType, initialValues };
 
   return (
     <React.Fragment>
-      <UpsertAcademyModal visible={visible} setVisible={() => {
-        setVisible(!visible);
-      }} />
+      <UpsertAcademyModal {...modalProps}/>
       <Layout>
         <PageHeader
           ghost={false}
@@ -190,9 +220,7 @@ function AcademiesPage() {
               key="3"
               type={"primary"}
               icon={<PlusOutlined />}
-              onClick={() => {
-                setVisible(true)
-              }}
+              onClick={dispatchActionType("CREATE_ACADEMY")}
             ></Button>
 
           ]}
