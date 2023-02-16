@@ -8,10 +8,14 @@ import {
   DatePicker,
   Button,
   Space,
-  message
+  InputNumber,
+  message,
 } from "antd";
+import dayjs from 'dayjs';
+
 import { useMutation, useQuery, gql } from '@apollo/client';
 import { MinusCircleOutlined, PlusOutlined } from '@ant-design/icons'
+import moment from "moment";
 
 const { OptGroup } = Select;
 const { TabPane } = Tabs;
@@ -25,6 +29,7 @@ const ACADEMY_CREATE_ONE = gql`
         name
         participants {
           name
+          age
           weight
         }
         _id
@@ -131,8 +136,6 @@ function UpsertAcademyModal(props: IProps) {
     };
   };
 
-  console.log(props.initialValues);
-
   return (
     <Modal
       title={props.actionType == 'CREATE_ACADEMY' ? 'Create' : 'Update'}
@@ -189,7 +192,21 @@ function UpsertAcademyModal(props: IProps) {
               }]}
             >
               <Input
-                size={'large'}/>
+                size={'large'} />
+            </Form.Item>
+
+            <Form.Item
+              label="Balance"
+              name="balance"
+              hasFeedback
+              rules={[{
+                required: true,
+                message: 'Please input your balance!',
+                type: 'number'
+              }]}
+            >
+              <InputNumber
+                size={'large'} style={{ width: '100%' }}/>
             </Form.Item>
 
             <Form.Item
@@ -204,7 +221,7 @@ function UpsertAcademyModal(props: IProps) {
             >
               <Input
                 size={'large'}
-                 />
+              />
             </Form.Item>
 
             <Form.Item
@@ -219,7 +236,7 @@ function UpsertAcademyModal(props: IProps) {
             >
               <Input
                 size={'large'}
-                 />
+              />
             </Form.Item>
 
           </TabPane>
@@ -228,7 +245,7 @@ function UpsertAcademyModal(props: IProps) {
             <Form.List name="participants">
               {(fields, { add, remove }) => (
                 <>
-                {console.log(fields)}
+                  {console.log(fields)}
                   {fields.map(({ key, name, ...restField }) => (
                     <Space key={key} style={{ display: 'flex', marginBottom: 8 }} align="baseline">
                       <Form.Item
@@ -238,6 +255,15 @@ function UpsertAcademyModal(props: IProps) {
                       >
                         <Input placeholder="Full Name" size={'large'} />
                       </Form.Item>
+
+                      <DatePicker
+                        format={'DD/MM/YYYY'}
+                        size={'large'}
+                        onChange={(value) => {
+                          form.setFieldValue(['participants', key, 'age'], value);
+                        }}
+                        defaultValue={moment(form.getFieldValue(['participants', key, 'age']))}
+                      />
 
                       <Form.Item
                         {...restField}

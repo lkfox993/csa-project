@@ -94,12 +94,7 @@ export default function DivisionsPage() {
                 loading={loading}
                 grid={{
                     gutter: 16,
-                    xs: 1,
-                    sm: 2,
-                    md: 4,
-                    lg: 4,
-                    xl: 6,
-                    xxl: 3,
+                    column: 4
                 }}
                 dataSource={data?.categoryPagination?.items}
                 renderItem={(category: any) => {
@@ -107,17 +102,19 @@ export default function DivisionsPage() {
                     const academies = data?.academyPagination?.items;
 
                     const weights = academies.reduce((accumulator: any, academy: any) => {
-
+                        
                         academy.participants.forEach((participant: any) => {
 
-                            const [_id, weight] = participant?.weight.split('/');
+                            const p = {...participant};
+                            p.academy = academy;
+                            const [_id, weight] = p?.weight.split('/');
 
                             if (_id == category._id) {
 
                                 if (accumulator[weight]) {
-                                    accumulator[weight].push(participant);
+                                    accumulator[weight].push(p);
                                 } else {
-                                    accumulator[weight] = [participant];
+                                    accumulator[weight] = [p];
                                 }
                             }
 
@@ -140,7 +137,9 @@ export default function DivisionsPage() {
                                             dataSource={weights[weight]}
                                             renderItem={(participant: any, i: number) => (
                                                 <List.Item>
-                                                    {i + 1}. <Typography.Text mark>{participant.name}</Typography.Text>
+                                                    
+                                                    {i + 1}. <Typography.Text mark>{participant.name}</Typography.Text> ({participant.academy.name})
+                                                    
                                                 </List.Item>
                                             )} />
                                     )
