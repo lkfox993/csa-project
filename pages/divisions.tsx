@@ -50,7 +50,7 @@ const DIVISION_PAGINATION = gql`
 
 const PrintWrapper = React.forwardRef((props: any, ref: any) => {
     return (
-      <div ref={ref}>{props.children}</div>
+        <div ref={ref}>{props.children}</div>
     );
 });
 
@@ -69,11 +69,11 @@ export default function DivisionsPage() {
     }, 0);
 
     return (
-        
-            <PrintWrapper ref={printRef}>
+
+        <PrintWrapper ref={printRef}>
 
             <List
-                
+
                 header={(
                     <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
                         <span style={{ marginLeft: 20 }}>Athlete List By Division : {count && count}</span>
@@ -94,7 +94,12 @@ export default function DivisionsPage() {
                 loading={loading}
                 grid={{
                     gutter: 16,
-                    column: 4
+                    xs: 1,
+                    sm: 2,
+                    md: 4,
+                    lg: 4,
+                    xl: 6,
+                    xxl: 3,
                 }}
                 dataSource={data?.categoryPagination?.items}
                 renderItem={(category: any) => {
@@ -102,10 +107,10 @@ export default function DivisionsPage() {
                     const academies = data?.academyPagination?.items;
 
                     const weights = academies.reduce((accumulator: any, academy: any) => {
-                        
+
                         academy.participants.forEach((participant: any) => {
 
-                            const p = {...participant};
+                            const p = { ...participant };
                             p.academy = academy;
                             const [_id, weight] = p?.weight.split('/');
 
@@ -137,9 +142,9 @@ export default function DivisionsPage() {
                                             dataSource={weights[weight]}
                                             renderItem={(participant: any, i: number) => (
                                                 <List.Item>
-                                                    
+
                                                     {i + 1}. <Typography.Text mark>{participant.name}</Typography.Text> ({participant.academy.name})
-                                                    
+
                                                 </List.Item>
                                             )} />
                                     )
@@ -150,7 +155,7 @@ export default function DivisionsPage() {
                     )
                 }}
             />
-            </PrintWrapper>
-            
+        </PrintWrapper>
+
     )
 }

@@ -33,9 +33,9 @@ const ACADEMY_PAGINATION = gql`
         trainer
         email
         phone
-        balance
         participants {
           name
+          balance
           age
           weight
         }
@@ -110,15 +110,6 @@ function AcademiesPage() {
     },
 
     {
-      title: "Balance",
-      dataIndex: "balance",
-      key: "balance",
-      render(balance: number){
-        return balance || 0;
-      }
-    },
-
-    {
       title: "Action",
       key: "action",
       render: (record: any) => (
@@ -158,6 +149,15 @@ function AcademiesPage() {
         title: 'Name',
         dataIndex: 'name',
         key: 'name'
+      },
+
+      {
+        title: "Balance",
+        dataIndex: "balance",
+        key: "balance",
+        render(balance: number){
+          return balance || 0;
+        }
       },
 
       {

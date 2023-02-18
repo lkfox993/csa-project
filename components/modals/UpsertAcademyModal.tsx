@@ -154,7 +154,7 @@ function UpsertAcademyModal(props: IProps) {
       onCancel={() => {
         props.setVisible(false);
       }}
-      width={550}
+      width={650}
     >
       <Form
         form={form}
@@ -192,21 +192,7 @@ function UpsertAcademyModal(props: IProps) {
               }]}
             >
               <Input
-                size={'large'} />
-            </Form.Item>
-
-            <Form.Item
-              label="Balance"
-              name="balance"
-              hasFeedback
-              rules={[{
-                required: true,
-                message: 'Please input your balance!',
-                type: 'number'
-              }]}
-            >
-              <InputNumber
-                size={'large'} style={{ width: '100%' }}/>
+                size={'large'}/>
             </Form.Item>
 
             <Form.Item
@@ -245,7 +231,6 @@ function UpsertAcademyModal(props: IProps) {
             <Form.List name="participants">
               {(fields, { add, remove }) => (
                 <>
-                  {console.log(fields)}
                   {fields.map(({ key, name, ...restField }) => (
                     <Space key={key} style={{ display: 'flex', marginBottom: 8 }} align="baseline">
                       <Form.Item
@@ -253,7 +238,21 @@ function UpsertAcademyModal(props: IProps) {
                         name={[name, 'name']}
                         rules={[{ required: true, message: 'Missing full name' }]}
                       >
-                        <Input placeholder="Full Name" size={'large'} />
+                        <Input placeholder="Full Name" size={'large'} style={{ width: 200 }} />
+                      </Form.Item>
+
+                      <Form.Item
+                        {...restField}
+                        name={[name, 'balance']}
+                        hasFeedback
+                        rules={[{
+                          required: false,
+                          message: 'Please input your balance!',
+                          type: 'number'
+                        }]}
+                      >
+                        <InputNumber
+                          size={'large'} defaultValue={0}/>
                       </Form.Item>
 
                       <DatePicker

@@ -27,12 +27,6 @@ const AcademySchema = Schema({
     required: true
   },
 
-  balance: {
-    type: Number,
-    required: false,
-    defaultValue: 0
-  },
-
   participants: {
     type: [
       {
@@ -48,6 +42,12 @@ const AcademySchema = Schema({
           type: Date,
           required: false,
           default: Date.now
+        },
+
+        balance: {
+          type: Number,
+          required: false,
+          defaultValue: 0
         },
 
         weight: {
