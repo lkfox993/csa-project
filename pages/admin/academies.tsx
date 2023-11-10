@@ -26,7 +26,7 @@ import {
 const ACADEMY_PAGINATION = gql`
 
   query AcademyPagination {
-    academyPagination(page: 1, perPage: 20, filter: {}, sort: _ID_ASC) {
+    academyPagination(page: 1, perPage: 100, filter: {}, sort: _ID_ASC) {
       count
       items {
         name
@@ -84,7 +84,6 @@ function AcademiesPage() {
   };
   
   const columns = [
-
     {
       title: "Name",
       dataIndex: "name",
@@ -239,9 +238,7 @@ function AcademiesPage() {
         <Table
           rowKey={'_id'}
           expandable={{ expandedRowRender, defaultExpandedRowKeys: ['0'] }}
-          pagination={{
-            pageSize: 15,
-          }}
+          pagination={false}
           dataSource={data?.academyPagination?.items}
           columns={columns}
           loading={loading}
